@@ -15,6 +15,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String TABLE_ETUDIANT="Etudiant";
     private static final String TABLE_ECOLE="Ecole";
+    private static final String TABLE_REMARQUE="Remarque";
 
     private static final String NOM_ETUDIANT="nomEtudiant";
     private static final String PRENOM_ETUDIANT="prenomEtudiant";
@@ -25,6 +26,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String EMAIL="email";
     private static final String NOM_ECOLE="nomEcole";
     private static final String ABR_ECOLE="abrEcloe";
+    private static final String CIN_ETUDIANT_REM="cinEtudiant";
+    private static final String TITRE_REMARQUE="titreRemarque";
+    private static final String CONTENU_REMARQUE="contenuRemarque";
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -51,12 +55,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                             "    FOREIGN KEY ("+NOM_ECOLE_ETUDIANT+") REFERENCES "+TABLE_ECOLE+"("+NOM_ECOLE+")\n" +
                             ");";
             String queryRemarque=
-                    "CREATE TABLE Remarque (\n" +
+                    "CREATE TABLE "+TABLE_REMARQUE+" (\n" +
                             "    idRemarque INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                            "    cinEtudiant TEXT,\n" +
-                            "    titreRemarque TEXT,\n" +
-                            "    contenuRemarque TEXT,\n" +
-                            "    FOREIGN KEY (cinEtudiant) REFERENCES Etudiant(cin)\n" +
+                            "    "+CIN_ETUDIANT_REM+" TEXT,\n" +
+                            "    "+TITRE_REMARQUE+" TEXT,\n" +
+                            "    "+CONTENU_REMARQUE+" TEXT,\n" +
+                            "    FOREIGN KEY ("+CIN_ETUDIANT_REM+") REFERENCES "+TABLE_ETUDIANT+" ("+CIN_ETUDIANT+")\n" +
                             ");";
             String queryMatiere=
                     "CREATE TABLE Matiere (\n" +
@@ -124,5 +128,26 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public Cursor getAbrByName(String nomEcole){
         SQLiteDatabase db=this.getWritableDatabase();
         return db.rawQuery("SELECT "+ABR_ECOLE+" FROM "+TABLE_ECOLE+" WHERE "+NOM_ECOLE+"=?", new String[]{nomEcole});
+    }
+
+    public Cursor getAllRemarquesByUser(String cin){
+        SQLiteDatabase db=this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM "+TABLE_REMARQUE+" WHERE "+CIN_ETUDIANT_REM+"=?",new String[]{cin});
+    }
+
+    public void addRemarque(String cin, String titre, String contenu){
+        SQLiteDatabase db=this.getWritableDatabase();
+
+        ContentValues cv_remarque=new ContentValues();
+        cv_remarque.put(CIN_ETUDIANT_REM, cin);
+        cv_remarque.put(TITRE_REMARQUE, titre);
+        cv_remarque.put(CONTENU_REMARQUE, contenu);
+
+        long result=db.insert(TABLE_REMARQUE, null, cv_remarque);
+        if(result==-1){
+            Toast.makeText(context, "Problème avec la base de donneés", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(context, "Remarque ajoutée !", Toast.LENGTH_SHORT).show();
+        }
     }
 }
