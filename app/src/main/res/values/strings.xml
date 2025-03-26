@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">portfolioApplication</string>
+    <string name="titreBienvenu">Bienvenu dans votre portfolio numérique</string>
+    <string name="nomEtudiant">Votre nom</string>
+    <string name="prenomEtudiant">Votre prénom</string>
+    <string name="email">Votre E-mail</string>
+    <string name="password">Mot de passe</string>
+    <string name="nomEcole">Votre Ecole</string>
+    <string name="abr">Abreviation de l\'école</string>
+    <string name="age">Age</string>
+    <string name="cin">CIN</string>
+    <string name="inputUser">S\'enregistrer</string>
+    <string name="loginTitle">S\'identifier</string>
+    <string name="loginEmail">E-mail</string>
+    <string name="loginPass">Mot de passe</string>
+    <string name="buttonLogin">S\'identifier</string>
+    <string name="fullName">%s %s</string>
+    <string name="emailView">%s</string>
+    <string name="cinAge">%s (%s)</string>
+    <string name="abrEcole">%s</string>
+    <string name="ajouterRemarque">Ajouter une remarque</string>
+    <string name="titreRemarque">Titre de remarque</string>
+    <string name="contenuRemarque">Contenu de la remarque</string>
+</resources>
